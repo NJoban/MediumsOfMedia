@@ -1,2 +1,3 @@
-# Movie Director
-just a mini project to test out some graphql skills
+# MovieShows
+
+An attempt to combine Movie and TV Show listers into one website.
