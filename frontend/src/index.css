@@ -1,0 +1,44 @@
+:root {
+  --font-body: 'Roboto', sans-serif;
+  --font-head: 'Archivo Black', sans-serif;
+  --font-code: "attribute-mono", monospace;
+}
+
+
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-head) !important;
+}
+
+#root {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.inherit {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.inherit:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.center {
+  justify-content: center;
+}
