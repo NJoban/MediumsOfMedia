@@ -20,13 +20,6 @@ const NavBar = () => {
                             Movies 🎬
                         </NavLink>
                     </Nav.Link>
-                    <Nav.Link>
-                        <NavLink className="inherit" to="/directors" style={({ isActive }) => ({
-                            color: isActive ? 'rgba(255,255,255,.75)' : ''
-                        })}>
-                            Directors 🎥
-                        </NavLink>
-                    </Nav.Link>
                 </Nav>
             </Container>
         </Navbar>

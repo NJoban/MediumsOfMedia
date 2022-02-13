@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Button } from 'react-bootstrap';
 import styles from './home.module.css'
 
 const Home = () => {
@@ -26,6 +27,10 @@ const Home = () => {
     return (
         <div className={styles.homeContainer}>
             <h1>Just a little side project 🐱‍👤🐱‍👤🐱‍👤</h1>
+            <div className={styles.bodyContainer}>
+                <Button className={styles.loginBtn} variant="dark">Login</Button>
+                <Button className={styles.signupBtn} variant="dark">Signup</Button>
+            </div>
         </div>
     )
 }

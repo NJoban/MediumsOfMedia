@@ -1,12 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Home from "./pages/Home/Home";
-import Movies from "./pages/Movies/Movies";
-import Directors from "./pages/Directors";
-import NavBar from "./components/Navbar/NavBar";
-import Create from "./components/Forms/Create/Create";
-import { Movie as MovieType } from "./assets/helpers/MovieType";
+import Home from "./Pages/Home/Home";
+import Movies from "./Pages/Movies/Movies";
+import NavBar from "./Components/Navbar/NavBar";
+import Create from "./Components/Forms/Create/Create";
+import MediaDetails from "./Components/MediaDetails/MediaDetails";
 
 
 const App = () => {
@@ -17,9 +16,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/movies" element={<Movies />} />
-          <Route path="/movies/add" element={<Create type="Movie" />} />
-          <Route path="/directors" element={<Directors />} />
-          <Route path="/directors/add" element={<Create type="Director" />} />
+          <Route path="/movies/:id" element={<MediaDetails type="Movie" />} />
         </Routes>
         </div>
       </BrowserRouter>

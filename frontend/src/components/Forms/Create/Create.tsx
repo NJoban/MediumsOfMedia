@@ -1,8 +1,7 @@
 import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { Button, Col, Dropdown, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Director } from "../../../assets/helpers/DirectorType";
-import { Movie, isMovieString, InsertIntoMovie } from "../../../assets/helpers/MovieType";
+import { Movie } from "../../../Interfaces/MovieType";
 import styles from "./create.module.css";
 
 interface CreateProps {
@@ -12,16 +11,8 @@ interface CreateProps {
 const Create = (props: CreateProps) => {
     const navigate = useNavigate();
     const [validated, setValidated] = useState(false);
-    const [directors, setDirectors] = useState<Array<Director> | Promise<any>>();
-    const [movieFormObj, setMovieFormObj] = useState<Movie>({
-        name: "",
-        genre: "",
-        rating: 0,
-        img_url: "",
-        director: {
-            id: 1
-        },
-    });
+    const [directors, setDirectors] = useState<Array<any> | Promise<any>>();
+    const [movieFormObj, setMovieFormObj] = useState<any>()
 
     useEffect(() => {
         if (props.type === "Movie") {
@@ -57,15 +48,13 @@ const Create = (props: CreateProps) => {
         }
         if (props.type === "Movie") {
             console.log(movieFormObj)
-            const x = InsertIntoMovie(movieFormObj);
-            console.log(x);
             // navigate("/movies")
         }
     };
     return (
         <div>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                {isMovieString(props.type) ? (
+                { isNaN(12) ? (
                     // add a movie
                     <div className={styles.formBodyContainer}>
                         <Form.Group as={Row} className="mb-4 center">
