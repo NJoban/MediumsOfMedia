@@ -1,36 +1,25 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import React, { useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { OnSearch } from '../../Assets/Helpers/OnSearch'
 import CardList from '../../Components/CardList/CardList'
 import Sidebar from '../../Components/Sidebar/Sidebar'
-import { Movie, MovieGenre } from '../../Interfaces/MovieType'
-import styles from './Movies.module.css'
-
-interface oldData {
-    oldGenre?: string
-    oldPage?: number;
-}
-
-const Movies = () => {
+import { Show, ShowGenre } from '../../Interfaces/ShowType'
+import styles from './Shows.module.css'
+const Shows = () => {
     const { genre } = useParams();
-    const navigate = useNavigate();
     const totalPages = 500;
-    const [movies, setMovies] = useState<Movie[]>()
+    const [shows, setShows] = useState<Show[]>()
     const inputRef = useRef<any>(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [paginiationCheck, setPaginiationCheck] = useState(true)
-    const SideBarPages: MovieGenre[] = [
+    const [paginiationCheck, setPaginiationCheck] = useState(true);
+    const SideBarPages: ShowGenre[] = [
         {
             id: -1,
             name: "Popular"
         },
         {
-            id: 28,
+            id: 10759,
             name: "Action",
-        },
-        {
-            id: 12,
-            name: "Adventure",
         },
         {
             id: 16,
@@ -41,31 +30,35 @@ const Movies = () => {
             name: "Comedy",
         },
         {
+            id: 80,
+            name: "Crime",
+        },
+        {
+            id: 99,
+            name: "Documentary",
+        },
+        {
             id: 18,
             name: "Drama",
         },
         {
-            id: 14,
-            name: "Fantasy",
+            id: 10762,
+            name: "Kids"
         },
         {
-            id: 27,
-            name: "Horror",
-        },
-        {
-            id: 878,
-            name: "Science Fiction"
+            id: 10765,
+            name: "Sci-Fi"
         }
     ]
 
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&with_genres=${genre}`, {
+        fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&with_genres=${genre}`, {
             "method": "GET",
         })
             .then(response => response.json())
             .then(data => {
-                data.results.map((movie: Movie) => movie.type = "movies")
-                setMovies(data.results)
+                data.results.map((show: Show) => show.type = "shows")
+                setShows(data.results)
             })
         if (currentPage == 1 && sessionStorage.getItem("genre") == genre) {
             setCurrentPage(Number(sessionStorage.getItem("page")))
@@ -81,38 +74,40 @@ const Movies = () => {
     // useState is an async function so reseting state to 1
     // will not affect the fetch and will use the previously set currentPage
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&with_genres=${genre}&page=${currentPage}`, {
+        fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&with_genres=${genre}&page=${currentPage}`, {
             "method": "GET",
         })
             .then(response => response.json())
             .then(data => {
-                data.results.map((movie: Movie) => movie.type = "movies")
-                setMovies(data.results)
+                data.results.map((show: Show) => show.type = "shows")
+                setShows(data.results)
             })
     }, [currentPage])
 
     const handleSearch = () => {
         let encodedSearchWord = encodeURIComponent(inputRef.current?.value)
-        let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&query=${encodedSearchWord}`
-        OnSearch(url, setMovies, "movies")
+        let url = `https://api.themoviedb.org/3/search/tv?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&query=${encodedSearchWord}`
+        OnSearch(url, setShows, "shows")
         setPaginiationCheck(false)
     }
-
     return (
         <>
-            <div className={styles.moviesContainer}>
-                <Sidebar name="movies" title="Movies 🎬" sideBarPages={SideBarPages} />
+            <div className={styles.showsContainer}>
+                <Sidebar
+                    name="shows"
+                    title="Shows 📺"
+                    sideBarPages={SideBarPages} />
                 {
-                    typeof movies == "undefined" ?
-                        <div className='loader'></div>
+                    typeof shows == "undefined" ?
+                        <div className='loader'>Loading...</div>
                         :
                         <CardList
                             currentPage={currentPage}
                             setCurrentPage={setCurrentPage}
                             pageCount={totalPages}
-                            listOfData={movies!}
-                            title={"Movies 🎬"}
-                            name={"movies"}
+                            listOfData={shows!}
+                            title={"Shows 📺"}
+                            name={"shows"}
                             inputRef={inputRef}
                             handleSearch={handleSearch}
                             paginiationCheck={paginiationCheck}
@@ -124,4 +119,4 @@ const Movies = () => {
     )
 }
 
-export default Movies
+export default Shows

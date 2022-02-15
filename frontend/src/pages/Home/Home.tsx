@@ -1,35 +1,38 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import styles from './home.module.css'
+import { auth } from '../../Assets/Firebase/Firebase';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
-const Home = () => {
+interface HomeProps {
+    isSignedIn: boolean;
+    setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-    const fetchMovieDbTesting = () => {
-        fetch("https://movie-database-imdb-alternative.p.rapidapi.com/?r=json&i=tt4154796", {
-            "method": "GET",
-            "headers": {
-                "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
-                "x-rapidapi-key": "83ccd43eacmshe8a99239e28eef5p1fb8d0jsn7d670c20d4b2"
-            }
-        })
-            .then(response => {
-                console.log(response);
-            })
-            .catch(err => {
+const Home = ({ isSignedIn, setIsSignedIn }: HomeProps) => {
+
+    const signInWithGoogle = () => {
+        const provider = new GoogleAuthProvider()
+        signInWithPopup(auth, provider)
+            .then((res) => {
+                setIsSignedIn(true)
+            }).catch((err) => {
                 console.error(err);
-            });
+            })
     }
 
-    useEffect(() => {
-        fetchMovieDbTesting();
-    }, [])
-
+    const signOut = () => {
+        auth.signOut()
+        setIsSignedIn(false)
+    }
     return (
         <div className={styles.homeContainer}>
-            <h1>Just a little side project 🐱‍👤🐱‍👤🐱‍👤</h1>
             <div className={styles.bodyContainer}>
-                <Button className={styles.loginBtn} variant="dark">Login</Button>
-                <Button className={styles.signupBtn} variant="dark">Signup</Button>
+                {isSignedIn ?
+                    <Button variant="dark" className={styles.loginBtn} onClick={signOut}> Sign out </Button>
+                    :
+                    <Button variant="dark" className={styles.loginBtn} onClick={signInWithGoogle}>Sign In With Google</Button>
+                }
             </div>
         </div>
     )

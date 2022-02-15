@@ -1,0 +1,4 @@
+.moviesContainer {
+    display: flex;
+    flex-direction: column;
+}

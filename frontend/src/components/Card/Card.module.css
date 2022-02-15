@@ -16,9 +16,21 @@
     transform: scale(0.95);
 }
 
-.movieImage {
+.cardImage {
     height: 20vw;
     min-width: 200px;
     min-height: 300px;
     border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.cardDetails {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardDetailsTitle {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

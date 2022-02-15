@@ -1,29 +1,32 @@
-export interface Movie {
+export interface Show {
     type: String;
+    first_air_path?: String;
     poster_path?: String;
-    adult?: boolean;
     overview?: String;
-    release_date?: String;
     genre_ids?: Number[];
     id: Number;
-    original_title?: String;
     original_language?: String;
-    title: String;
+    original_title?: String;
+    name?: String;
     backdrop_path?: String;
     popularity?: Number;
     vote_count?: Number;
-    video?: boolean;
     vote_average?: number;
 }
 
-export interface MovieType extends Movie {
-    genres?: MovieGenre[];
+export interface ShowType extends Show {
+    objectType: "Show";
+    genres?: ShowGenre[];
     homepage?: String;
     production_companies?: object;
     tagline?: String;
+    number_of_episodes?: number;
+    number_of_seasons?: number;
+    status?: String;
+    next_episode_to_air: any;
 }
 
-export interface MovieGenre {
+export interface ShowGenre {
     name: String;
     id: Number;
 }
