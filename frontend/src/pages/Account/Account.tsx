@@ -1,7 +1,11 @@
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { child, get, onValue, ref } from 'firebase/database';
 import React, { useEffect, useState } from 'react'
+import { Button } from 'react-bootstrap';
 import { auth, database } from '../../Assets/Firebase/Firebase'
 import CardList from '../../Components/CardList/CardList';
+import PopupModal from '../../Components/PopupModal/PopupModal';
 import { Movie } from '../../Interfaces/MovieType';
 import { Show } from '../../Interfaces/ShowType';
 import styles from './Account.module.css';
@@ -12,6 +16,7 @@ interface AccountProps {
 
 const Account = ({ isSignedIn }: AccountProps) => {
     const [data, setData] = useState<Movie[] | Show[] | any>()
+    const [modalShow, setModalShow] = useState(false);
 
     useEffect(() => {
         // const mediaRef = ref(database);
@@ -39,7 +44,15 @@ const Account = ({ isSignedIn }: AccountProps) => {
     return (
         <div className={styles.accountContainer}>
             {auth.currentUser != null &&
-                <h1>My List</h1>
+                <div className={styles.accountHeader}>
+                    <h1>My List</h1>
+                    <div className={styles.createListBtnContainer}>
+                        <Button variant="dark" onClick={() => setModalShow(true)}>
+                            <FontAwesomeIcon icon={faPlus} />&nbsp;
+                            Create a List
+                        </Button>
+                    </div>
+                </div>
             }
             {
                 typeof data == "undefined" ?
@@ -50,6 +63,14 @@ const Account = ({ isSignedIn }: AccountProps) => {
                         name={data?.type}
                     />
             }
+
+            <PopupModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                size="lg"
+                titleText="Create Media List"
+
+            />
         </div>
     )
 }

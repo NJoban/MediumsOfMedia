@@ -4,3 +4,13 @@
     flex-direction: column;
     margin: 10px;
 }
+
+.accountHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.createListBtnContainer {
+    display: flex;
+    padding: 10px;
+}
